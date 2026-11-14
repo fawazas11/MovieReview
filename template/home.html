@@ -1,0 +1,218 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home | MovieReview{% endblock %}
+
+{% block content %}
+
+<section class="hero-slider" id="heroSlider">
+
+    <!-- Slide 1: Avengers Doomsday (WebP) -->
+    <div class="hero-slide active">
+        <img class="hero-image doomsday-image"
+             src="{% static 'image/avengers-doomsday1.jpg' %}"
+             alt="Avengers Doomsday poster">
+
+        <div class="hero-overlay">
+            <span class="hero-tag">UPCOMING MOVIE</span>
+            <h1>Avengers: Doomsday</h1>
+            <p>The Marvel Cinematic Universe enters a new era of heroes, villains and epic battles.</p>
+            <a href="{% url 'search_movies' %}" class="hero-btn">Explore Movies</a>
+        </div>
+    </div>
+
+    <!-- Slide 2: Dune Part Three (WebP) -->
+    <div class="hero-slide">
+        <img class="hero-image"
+             src="{% static 'image/dune-part-three.webp' %}"
+             alt="Dune Part Three poster">
+
+        <div class="hero-overlay">
+            <span class="hero-tag">SCI-FI EPIC</span>
+            <h1>Dune: Part Three</h1>
+            <p>Return to the vast deserts of Arrakis in the next chapter of the Dune saga.</p>
+            <a href="{% url 'search_movies' %}" class="hero-btn">Explore Movies</a>
+        </div>
+    </div>
+
+    <!-- Slide 3: Ramayana Part One -->
+    <div class="hero-slide">
+        <img class="hero-image"
+             src="{% static 'image/ramayana-part-one.jpg' %}"
+             alt="Ramayana Part One movie poster">
+
+        <div class="hero-overlay">
+            <span class="hero-tag">EPIC ADVENTURE</span>
+            <h1>Ramayana: Part One</h1>
+            <p>Experience a legendary Indian epic brought to life on the big screen.</p>
+            <a href="{% url 'search_movies' %}" class="hero-btn">Explore Movies</a>
+        </div>
+    </div>
+
+    <!-- Slide 4: King -->
+    <div class="hero-slide">
+        <img class="hero-image"
+             src="{% static 'image/king.jpg' %}"
+             alt="King movie poster">
+
+        <div class="hero-overlay">
+            <span class="hero-tag">BOLLYWOOD</span>
+            <h1>King</h1>
+            <p>Shah Rukh Khan steps into a high-stakes action thriller.</p>
+            <a href="{% url 'search_movies' %}" class="hero-btn">Explore Movies</a>
+        </div>
+    </div>
+
+    <!-- Slide 5: Jailer 2 -->
+    <div class="hero-slide">
+        <img class="hero-image jailer-image"
+             src="{% static 'image/jailer-2.jpg' %}"
+             alt="Jailer 2 movie poster">
+
+        <div class="hero-overlay">
+            <span class="hero-tag">TAMIL CINEMA</span>
+            <h1>Jailer 2</h1>
+            <p>Rajinikanth returns for another explosive chapter of the Jailer franchise.</p>
+            <a href="{% url 'search_movies' %}" class="hero-btn">Explore Movies</a>
+        </div>
+    </div>
+
+    <!-- Slide 6: OM Chapter 1 -->
+    <div class="hero-slide">
+        <img class="hero-image om-image"
+             src="{% static 'image/om-chapter-1-2.jpg' %}"
+             alt="OM Chapter 1 movie poster">
+
+        <div class="hero-overlay">
+            <span class="hero-tag">INDIAN CINEMA</span>
+            <h1>OM: Chapter 1</h1>
+            <p>Dhanush leads an intense new cinematic story.</p>
+            <a href="{% url 'search_movies' %}" class="hero-btn">Explore Movies</a>
+        </div>
+    </div>
+
+
+
+    <!-- Navigation arrows -->
+    <button type="button"
+            class="slider-arrow prev"
+            aria-label="Previous movie"
+            onclick="changeSlide(-1)">&#10094;</button>
+
+    <button type="button"
+            class="slider-arrow next"
+            aria-label="Next movie"
+            onclick="changeSlide(1)">&#10095;</button>
+
+    <!-- Six slide indicators -->
+    <div class="slider-dots">
+        <button class="slider-dot active" aria-label="Show slide 1" onclick="goToSlide(0)"></button>
+        <button class="slider-dot" aria-label="Show slide 2" onclick="goToSlide(1)"></button>
+        <button class="slider-dot" aria-label="Show slide 3" onclick="goToSlide(2)"></button>
+        <button class="slider-dot" aria-label="Show slide 4" onclick="goToSlide(3)"></button>
+        <button class="slider-dot" aria-label="Show slide 5" onclick="goToSlide(4)"></button>
+        <button class="slider-dot" aria-label="Show slide 6" onclick="goToSlide(5)"></button>
+    </div>
+
+</section>
+
+
+<!-- About MovieReview Section -->
+<section class="about-moviereview">
+    <div class="about-content">
+        <span class="about-label">WELCOME TO MOVIEREVIEW</span>
+
+        <h2>Your Movies. Your Reviews. Your Voice.</h2>
+
+        <p class="about-description">
+            MovieReview is your destination for discovering movies,
+            exploring different genres, and sharing your thoughts about
+            the films you love. From thrilling action and captivating
+            dramas to unforgettable romances and exciting adventures,
+            find movies that match your taste.
+        </p>
+
+        <p class="about-description">
+            Explore movie details, read reviews from other movie lovers,
+            rate films, and write your own reviews. Whether you are
+            searching for your next favourite movie or sharing your
+            cinematic experience, MovieReview brings movie enthusiasts
+            together in one place.
+        </p>
+
+        <div class="about-features">
+            <div class="about-feature">
+                <span class="feature-icon">🎬</span>
+                <h3>Discover Movies</h3>
+                <p>Explore movies and learn about their stories, genres,
+                   directors, and release years.</p>
+            </div>
+
+            <div class="about-feature">
+                <span class="feature-icon">⭐</span>
+                <h3>Rate & Review</h3>
+                <p>Share your opinions, rate your favourite films,
+                   and read reviews from other users.</p>
+            </div>
+
+            <div class="about-feature">
+                <span class="feature-icon">❤️</span>
+                <h3>Your Watchlist</h3>
+                <p>Keep track of movies you want to watch and
+                   discover your next cinematic experience.</p>
+            </div>
+        </div>
+
+        <a href="{% url 'search_movies' %}" class="about-btn">
+            Explore Movies
+        </a>
+    </div>
+</section>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const slides = document.querySelectorAll(".hero-slide");
+    const dots = document.querySelectorAll(".slider-dot");
+
+    if (!slides.length) return;
+
+    let currentSlide = 0;
+    let slideTimer;
+
+    function showSlide(index) {
+        currentSlide = (index + slides.length) % slides.length;
+
+        slides.forEach((slide, i) => {
+            slide.classList.toggle("active", i === currentSlide);
+        });
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle("active", i === currentSlide);
+        });
+    }
+
+    function restartTimer() {
+        clearInterval(slideTimer);
+        slideTimer = setInterval(function () {
+            showSlide(currentSlide + 1);
+        }, 5000);
+    }
+
+    window.changeSlide = function (direction) {
+        showSlide(currentSlide + direction);
+        restartTimer();
+    };
+
+    window.goToSlide = function (index) {
+        showSlide(index);
+        restartTimer();
+    };
+
+    showSlide(0);
+    restartTimer();
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MovieReview{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{% url 'index' %}" class="logo">MovieReview</a>
+
+     <div class="nav-links">
+         <a href="{% url 'index' %}">Home</a>
+         <a href="{% url 'search_movies' %}">Movies</a>
+         <a href="{% url 'genres' %}">Genres</a>
+<!--        <a href="{% url 'watchlist' %}">Watchlist</a>-->
+         <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 MovieReview | Movie Reviews and Recommendations</p>
+    </footer>
+
+</body>
+</html>

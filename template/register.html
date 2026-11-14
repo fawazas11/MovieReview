@@ -1,0 +1,20 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Register | MovieReview{% endblock %}
+
+{% block content %}
+<div class="form-box">
+    <h1>Create an Account</h1>
+    <p>Join MovieReview to rate movies and share your reviews.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn">Register</button>
+    </form>
+
+    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+</div>
+{% endblock %}

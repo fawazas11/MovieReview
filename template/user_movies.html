@@ -1,0 +1,79 @@
+
+{% extends 'user_base.html' %}
+{% load static %}
+
+{% block title %}Movies | MovieReview{% endblock %}
+
+{% block content %}
+<section class="user-catalog-page">
+    <div class="catalog-header">
+        <p class="reviews-eyebrow">YOUR MOVIE COLLECTION</p>
+        <h1>Explore Movies</h1>
+        <p>Discover movies, explore genres, and share your opinions.</p>
+    </div>
+
+    <form method="GET" class="catalog-filters">
+        <input
+            type="search"
+            name="q"
+            value="{{ search_query }}"
+            placeholder="Search movie or director..."
+        >
+
+        <select name="genre">
+            <option value="">All Genres</option>
+            {% for genre in genres %}
+                <option value="{{ genre.id }}"
+                    {% if selected_genre == genre.id|stringformat:"s" %}selected{% endif %}>
+                    {{ genre.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="reviews-browse-btn">Search</button>
+        <a href="{% url 'user_movies' %}" class="catalog-reset">Clear</a>
+    </form>
+
+    {% if movies %}
+        <div class="user-movie-grid">
+            {% for movie in movies %}
+                <article class="user-movie-card">
+                    <a href="{% url 'movie_detail' movie.id %}">
+                        {% if movie.poster %}
+                            <img src="{{ movie.poster.url }}"
+                                 alt="{{ movie.title }} poster"
+                                 class="user-movie-poster">
+                        {% else %}
+                            <div class="user-movie-placeholder">🎬</div>
+                        {% endif %}
+                    </a>
+
+                    <div class="user-movie-info">
+                        <h2>
+                            <a href="{% url 'movie_detail' movie.id %}">
+                                {{ movie.title }}
+                            </a>
+                        </h2>
+
+                        <p>{{ movie.release_year }} · {{ movie.genre.name }}</p>
+                        <p class="movie-director">Director: {{ movie.director }}</p>
+                        <p class="movie-description">
+                            {{ movie.description|truncatewords:20 }}
+                        </p>
+
+                        <a href="{% url 'movie_detail' movie.id %}"
+                           class="reviews-browse-btn">
+                            View Movie
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="catalog-empty">
+            <h2>No movies found</h2>
+            <p>Try another search or choose a different genre.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

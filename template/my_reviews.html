@@ -1,0 +1,107 @@
+
+{% extends 'user_base.html' %}
+
+{% block title %}My Reviews | MovieReview{% endblock %}
+
+{% block content %}
+<section class="my-reviews-page">
+
+    <div class="my-reviews-header">
+        <div>
+            <p class="reviews-eyebrow">YOUR MOVIE JOURNAL</p>
+            <h1>My Reviews</h1>
+            <p class="reviews-subtitle">
+                Every movie you've rated. Every opinion you've shared.
+            </p>
+        </div>
+
+        <div class="reviews-count">
+            <span>{{ reviews|length }}</span>
+            <small>
+                Review{{ reviews|length|pluralize }}
+            </small>
+        </div>
+    </div>
+
+    {% if reviews %}
+        <div class="my-reviews-list">
+            {% for review in reviews %}
+                <article class="my-review-card">
+
+                    <div class="my-review-poster">
+                        {% if review.movie.poster %}
+                            <img
+                                src="{{ review.movie.poster.url }}"
+                                alt="{{ review.movie.title }} poster"
+                                loading="lazy"
+                            >
+                        {% else %}
+                            <div class="review-poster-placeholder">
+                                🎬
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="my-review-content">
+                        <div class="my-review-top">
+                            <div>
+                                <h2>{{ review.movie.title }}</h2>
+                                <p class="my-review-meta">
+                                    {{ review.movie.release_year }}
+                                    {% if review.movie.director %}
+                                        · {{ review.movie.director }}
+                                    {% endif %}
+                                </p>
+                            </div>
+
+                            <div class="my-review-rating">
+                                <span>★</span>
+                                {{ review.rating }}/5
+                            </div>
+                        </div>
+
+                        <p class="my-review-comment">
+                            {{ review.comment|linebreaksbr }}
+                        </p>
+
+                        <div class="my-review-footer">
+                            <span>
+                                Reviewed on
+                                {{ review.created_at|date:"d M Y" }}
+                            </span>
+<form method="POST"
+      action="{% url 'delete_my_review' review.id %}"
+      onsubmit="return confirm('Are you sure you want to delete this review?');">
+
+    {% csrf_token %}
+
+    <button type="submit" class="delete-review-btn">
+        Delete Review
+    </button>
+
+</form>
+
+
+                        </div>
+                    </div>
+
+                </article>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <div class="my-reviews-empty">
+            <div class="empty-review-icon">🎬</div>
+            <h2>No reviews yet</h2>
+            <p>
+                Your movie journey starts here.
+                Watch a movie and share your opinion!
+            </p>
+            <a href="{% url 'search_movies' %}" class="reviews-browse-btn">
+                Explore Movies →
+            </a>
+        </div>
+    {% endif %}
+
+</section>
+{% endblock %}

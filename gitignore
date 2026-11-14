@@ -1,0 +1,28 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# PyCharm / IDE settings
+.idea/
+
+# Django local database
+db.sqlite3
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Django generated files
+staticfiles/
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db

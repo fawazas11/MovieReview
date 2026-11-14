@@ -1,0 +1,87 @@
+
+{% extends user.is_authenticated|yesno:"user_base.html,base.html" %}
+
+{% block title %}{{ movie.title }} | MovieReview{% endblock %}
+
+{% block content %}
+
+<div class="detail-card">
+    {% if movie.poster %}
+        <img class="detail-poster"
+             src="{{ movie.poster.url }}"
+             alt="{{ movie.title }}">
+    {% endif %}
+
+    <div>
+        <h1>{{ movie.title }}</h1>
+        <p><strong>Year:</strong> {{ movie.release_year }}</p>
+        <p><strong>Director:</strong> {{ movie.director }}</p>
+        <p><strong>Genre:</strong> {{ movie.genre.name }}</p>
+        <p><strong>Description:</strong> {{ movie.description }}</p>
+
+        <p><strong>Rating:</strong>
+            {% if movie.average_rating %}
+                {{ movie.average_rating|floatformat:1 }}/5
+            {% else %}
+                Not rated yet
+            {% endif %}
+        </p>
+
+        <!-- Personal Watchlist -->
+        {% if user.is_authenticated %}
+            {% if is_in_watchlist %}
+                <form method="POST"
+                      action="{% url 'remove_from_watchlist' movie.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="watchlist-btn">
+                        ✓ Remove from My Watchlist
+                    </button>
+                </form>
+            {% else %}
+                <form method="POST"
+                      action="{% url 'add_to_watchlist' movie.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="watchlist-btn">
+                        + Add to My Watchlist
+                    </button>
+                </form>
+            {% endif %}
+        {% else %}
+            <p>
+                <a href="{% url 'login' %}" class="action-btn">Login</a>
+                to add this movie to your watchlist.
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="reviews-section">
+    <h2>Reviews</h2>
+
+    {% for review in reviews %}
+        <div class="review-card">
+            <strong>{{ review.user.username }}</strong>
+            <p class="review-rating">
+                Rating: {{ review.rating }}/5
+            </p>
+            <p class="review-comment">{{ review.comment }}</p>
+            <small>{{ review.created_at|date:"d M Y" }}</small>
+        </div>
+    {% empty %}
+        <p>No reviews yet.</p>
+    {% endfor %}
+</div>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'add_review' movie.id %}" class="action-btn">
+        Write a Review
+    </a>
+{% else %}
+    <p>
+        <a href="{% url 'login' %}" class="action-btn">Login</a>
+        to write a review.
+    </p>
+{% endif %}
+
+{% endblock %}

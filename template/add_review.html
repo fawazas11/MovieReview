@@ -1,0 +1,52 @@
+ {% extends 'user_base.html' %}
+
+{% block title %}Write a Review | MovieReview{% endblock %}
+
+{% block content %}
+<section class="add-review-page">
+    <div class="add-review-card">
+        <p class="reviews-eyebrow">YOUR MOVIE JOURNAL</p>
+        <h1>Write a Review</h1>
+        <h2>{{ movie.title }}</h2>
+
+        {% if movie.poster %}
+            <img
+                src="{{ movie.poster.url }}"
+                alt="{{ movie.title }} poster"
+                class="add-review-poster"
+            >
+        {% endif %}
+
+        {% if error %}
+            <p class="review-error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="rating">Your Rating</label>
+            <select name="rating" id="rating" required>
+                <option value="">Choose a rating</option>
+                <option value="1">★ 1 - Poor</option>
+                <option value="2">★ 2 - Fair</option>
+                <option value="3">★ 3 - Good</option>
+                <option value="4">★ 4 - Very Good</option>
+                <option value="5">★ 5 - Excellent</option>
+            </select>
+
+            <label for="comment">Your Review</label>
+            <textarea
+                name="comment"
+                id="comment"
+                rows="6"
+                placeholder="What did you think of this movie?"
+                required
+            ></textarea>
+
+            <button type="submit" class="reviews-browse-btn">
+                Submit Review
+            </button>
+        </form>
+    </div>
+</section>
+{% endblock %}

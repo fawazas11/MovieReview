@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Movie | Admin</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            color: #333;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 17px;
+            margin-bottom: 25px;
+            background: #fff;
+            color: #444;
+            border: 1px solid #e0e0e0;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+        }
+
+        .back-link:hover {
+            background: #007bff;
+            color: #fff;
+            border-color: #007bff;
+            transform: translateY(-1px);
+        }
+
+        .back-link .arrow {
+            font-size: 18px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 27px;
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .form-card {
+            background: #fff;
+            padding: 35px;
+            border-radius: 10px;
+            border: 1px solid #e8e8e8;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-card h2 {
+            font-size: 19px;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        form p {
+            margin-bottom: 20px;
+        }
+
+        form label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 9px;
+            color: #444;
+        }
+
+        form input,
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #dcdfe5;
+            border-radius: 6px;
+            background: #fff;
+            color: #333;
+            font-size: 14px;
+            outline: none;
+        }
+
+        form input:focus,
+        form textarea:focus,
+        form select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        form input[type="file"] {
+            padding: 9px;
+        }
+
+        .helptext {
+            display: block;
+            margin-top: 6px;
+            color: #888;
+            font-size: 12px;
+        }
+
+        .errorlist {
+            color: #dc3545;
+            font-size: 13px;
+            margin: 6px 0;
+            padding-left: 20px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-update {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-update:hover {
+            background: #0069d9;
+        }
+
+        .btn-cancel {
+            background: #e9ecef;
+            color: #444;
+        }
+
+        .btn-cancel:hover {
+            background: #dce0e4;
+        }
+
+        @media (max-width: 600px) {
+            .form-card {
+                padding: 22px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="{% url 'admin_manage_movies' %}" class="back-link">
+        <span class="arrow">←</span>
+        <span>Manage Movies</span>
+    </a>
+
+    <div class="page-header">
+        <h1>Edit Movie</h1>
+        <p>Update the details of {{ movie.title }}.</p>
+    </div>
+
+    <div class="form-card">
+
+        <h2>Movie Information</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-update">
+                    Update Movie
+                </button>
+
+                <a href="{% url 'admin_manage_movies' %}" class="btn btn-cancel">
+                    Cancel
+                </a>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

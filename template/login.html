@@ -1,0 +1,35 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Login | MovieReview{% endblock %}
+
+{% block content %}
+<div class="form-box">
+    <h1>Login</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn">Login</button>
+    </form>
+
+    <p>
+        Don't have an account?
+        <a href="{% url 'register' %}">Register</a>
+    </p>
+    <br>
+    <p>
+<a href="{% url 'password_reset' %}">
+    Forgot Password?
+</a>
+    </p>
+</div>
+{% endblock %}

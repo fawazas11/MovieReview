@@ -1,0 +1,63 @@
+
+{% extends 'user_base.html' %}
+
+{% block title %}My Watchlist | MovieReview{% endblock %}
+
+{% block content %}
+<section class="user-catalog-page">
+    <div class="catalog-header">
+        <p class="reviews-eyebrow">YOUR PERSONAL COLLECTION</p>
+        <h1>My Watchlist</h1>
+        <p>Keep track of the movies you want to watch.</p>
+    </div>
+
+    {% if watchlist %}
+        <div class="user-movie-grid">
+            {% for item in watchlist %}
+                <article class="user-movie-card">
+                    <a href="{% url 'movie_detail' item.movie.id %}">
+                        {% if item.movie.poster %}
+                            <img src="{{ item.movie.poster.url }}"
+                                 alt="{{ item.movie.title }} poster"
+                                 class="user-movie-poster">
+                        {% else %}
+                            <div class="user-movie-placeholder">🎬</div>
+                        {% endif %}
+                    </a>
+
+                    <div class="user-movie-info">
+                        <h2>
+                            <a href="{% url 'movie_detail' item.movie.id %}">
+                                {{ item.movie.title }}
+                            </a>
+                        </h2>
+
+                        <p>
+                            {{ item.movie.release_year }}
+                            · {{ item.movie.genre.name }}
+                        </p>
+
+                        <p class="movie-director">
+                            Director: {{ item.movie.director }}
+                        </p>
+
+                        <a href="{% url 'movie_detail' item.movie.id %}"
+                           class="reviews-browse-btn">
+                            View Movie
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="catalog-empty">
+            <div class="empty-review-icon">🎬</div>
+            <h2>Your watchlist is empty</h2>
+            <p>Explore the movie collection and add movies you want to watch.</p>
+            <a href="{% url 'user_movies' %}" class="reviews-browse-btn">
+                Explore Movies →
+            </a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

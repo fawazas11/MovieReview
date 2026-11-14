@@ -1,0 +1,36 @@
+
+{% extends 'user_base.html' %}
+
+{% block title %}Genres | MovieReview{% endblock %}
+
+{% block content %}
+<section class="user-catalog-page">
+    <div class="catalog-header">
+        <p class="reviews-eyebrow">FIND YOUR NEXT FAVORITE</p>
+        <h1>Explore Genres</h1>
+        <p>Choose a genre to discover movies that match your mood.</p>
+    </div>
+
+    {% if genres %}
+        <div class="user-genre-grid">
+            {% for genre in genres %}
+                <a href="{% url 'user_movies' %}?genre={{ genre.id }}"
+                   class="user-genre-card">
+                    <span class="genre-icon">🎬</span>
+                    <h2>{{ genre.name }}</h2>
+                    <p>
+                        {{ genre.movies.count }}
+                        movie{{ genre.movies.count|pluralize }}
+                    </p>
+                    <span class="genre-explore">Explore movies →</span>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="catalog-empty">
+            <h2>No genres available</h2>
+            <p>Genres will appear here after the admin adds them.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

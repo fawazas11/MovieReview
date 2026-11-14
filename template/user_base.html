@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}MovieReview | My Account{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'user_dashboard' %}" class="logo">
+            MovieReview
+        </a>
+
+        <div class="nav-links">
+            <a href="{% url 'user_dashboard' %}">Dashboard</a>
+            <a href="{% url 'user_movies' %}">Movies</a>
+            <a href="{% url 'user_genres' %}">Genres</a>
+            <a href="{% url 'user_watchlist' %}">My Watchlist</a>
+
+           <a href="{% url 'my_reviews' %}">My Reviews</a>
+
+
+
+<div class="nav-user">
+    <button type="button" class="nav-user-btn">
+        <span class="user-avatar">
+            {{ request.user.username|first|upper }}
+        </span>
+        <span>{{ request.user.username }}</span>
+        <span class="dropdown-arrow">▾</span>
+    </button>
+
+    <div class="nav-dropdown">
+        <div class="dropdown-user-info">
+            <strong>{{ request.user.username }}</strong>
+            <small>{{ request.user.email }}</small>
+        </div>
+
+     <!------------------------------------      For password change-------------------------->
+
+
+        <a href="{% url 'profile' %}">
+            Profile
+        </a>
+
+
+    <!------------------------------------      For password change-------------------------->
+
+        {% if request.user.is_staff %}
+            <a href="/admin/">Admin Panel</a>
+        {% endif %}
+
+        <div class="dropdown-divider"></div>
+
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="dropdown-logout">
+                Logout
+            </button>
+        </form>
+    </div>
+</div>
+
+
+
+
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 MovieReview | Your Personal Movie Space</p>
+    </footer>
+</body>
+</html>

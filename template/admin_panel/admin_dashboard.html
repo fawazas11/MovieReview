@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | MovieReview</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f5f9;
+            color: #222;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #171c2b;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 25px 15px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 35px;
+            color: #e50914;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #d6d8df;
+            text-decoration: none;
+            padding: 14px 18px;
+            margin-bottom: 8px;
+            border-radius: 7px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #e50914;
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 28px;
+        }
+
+        .logout-btn {
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #b80710;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .card h3 {
+            color: #777;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            font-size: 32px;
+            color: #171c2b;
+        }
+
+        .welcome {
+            margin-top: 35px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .welcome p {
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .sidebar {
+                width: 180px;
+            }
+
+            .main-content {
+                margin-left: 180px;
+                padding: 15px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+    <h2>MovieReview</h2>
+
+    <a href="{% url 'admin_dashboard' %}" class="active">
+        Dashboard
+    </a>
+
+        <a href="{% url 'admin_add_movie' %}">
+    Add Movie
+</a>
+
+    <a href="{% url 'admin_manage_movies' %}">
+        Manage Movies
+    </a>
+
+
+
+    <a href="{% url 'admin_manage_genres' %}">
+        Manage Genres
+    </a>
+
+    <a href="{% url 'admin_manage_users' %}">
+        Manage Users
+    </a>
+
+    <a href="{% url 'admin_manage_reviews' %}">
+        Manage Reviews
+    </a>
+
+    <a href="{% url 'index' %}">
+        Visit Website
+    </a>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+    <div class="topbar">
+
+        <h1>Admin Dashboard</h1>
+
+        <form method="POST" action="{% url 'admin_logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+
+    <!-- SUMMARY CARDS -->
+    <div class="cards">
+
+        <div class="card">
+            <h3>Total Movies</h3>
+            <h2>{{ total_movies }}</h2>
+        </div>
+
+        <div class="card">
+            <h3>Total Genres</h3>
+            <h2>{{ total_genres }}</h2>
+        </div>
+
+        <div class="card">
+            <h3>Total Users</h3>
+            <h2>{{ total_users }}</h2>
+        </div>
+
+        <div class="card">
+            <h3>Total Reviews</h3>
+            <h2>{{ total_reviews }}</h2>
+        </div>
+
+    </div>
+
+
+    <!-- WELCOME SECTION -->
+    <div class="welcome">
+
+        <h2>Welcome, {{ request.user.username }}!</h2>
+
+        <p>
+            Welcome to the MovieReview administration panel.
+            Here you can manage movies, genres, registered users
+            and reviews.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

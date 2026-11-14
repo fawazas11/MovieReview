@@ -1,0 +1,160 @@
+
+{% extends 'user_base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block title %}My Dashboard | MovieReview{% endblock %}
+
+
+
+{% block content %}
+<div class="dashboard">
+
+    <!-- Welcome Banner -->
+    <section class="dashboard-hero">
+        <div class="hero-content">
+            <span class="hero-label">YOUR PERSONAL MOVIE SPACE</span>
+            <h1>Welcome back, {{ request.user.username }}!</h1>
+            <p>Your next favourite movie is waiting to be discovered.</p>
+
+            <a href="{% url 'user_genres' %}" class="dashboard-btn">
+                Explore Movies <span>&rarr;</span>
+            </a>
+        </div>
+        <div class="hero-decoration">🎬</div>
+    </section>
+
+    <!-- Statistics -->
+    <section class="dashboard-stats">
+        <div class="stat-card">
+            <div class="stat-icon purple">🎥</div>
+            <div>
+                <p>Total Reviews</p>
+                <h2>{{ reviews.count }}</h2>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon pink">❤️</div>
+            <div>
+                <p>Watchlist Movies</p>
+                <h2>{{ watchlist.count }}</h2>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon blue">⭐</div>
+            <div>
+                <p>Member Status</p>
+                <h2>Active</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- Watchlist -->
+    <section class="dashboard-section">
+        <div class="section-heading">
+            <div>
+                <h2>My Watchlist</h2>
+                <p>Movies saved for your next movie night.</p>
+            </div>
+            <a href="{% url 'watchlist' %}" class="view-all">View all &rarr;</a>
+        </div>
+
+        {% if watchlist %}
+            <div class="dashboard-movie-grid">
+                {% for item in watchlist|slice:":4" %}
+                    <a href="{% url 'movie_detail' item.movie.id %}"
+                       class="dashboard-movie-card">
+                        {% if item.movie.poster %}
+                            <img src="{{ item.movie.poster.url }}"
+                                 alt="{{ item.movie.title }}"
+                                 class="dashboard-poster">
+                        {% else %}
+                            <div class="poster-placeholder">🎬</div>
+                        {% endif %}
+
+                        <div class="movie-card-info">
+                            <h3>{{ item.movie.title }}</h3>
+                            <p>{{ item.movie.release_year }} · {{ item.movie.genre.name }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="dashboard-empty">
+                <span>🍿</span>
+                <h3>Your watchlist is waiting</h3>
+                <p>Save movies here so you can find them later.</p>
+                <a href="{% url 'user_movies' %}" class="dashboard-btn">
+                    Discover Movies
+                </a>
+            </div>
+        {% endif %}
+    </section>
+
+    <!-- Reviews -->
+    <section class="dashboard-section">
+        <div class="section-heading">
+            <div>
+                <h2>My Reviews</h2>
+                <p>Your ratings and thoughts on movies.</p>
+            </div>
+        </div>
+
+        {% if reviews %}
+            <div class="review-list">
+                {% for review in reviews|slice:":5" %}
+                    <div class="dashboard-review">
+                        <div class="review-poster">
+                            {% if review.movie.poster.url %}
+                                <img src="{{ review.movie.poster.url }}"
+                                     alt="{{ review.movie.title }}">
+                            {% else %}
+                                🎬
+                            {% endif %}
+                        </div>
+
+                        <div class="review-details">
+                            <h3>{{ review.movie.title }}</h3>
+                            <p class="review-stars">
+                                <span>★</span> {{ review.rating }}/5
+                            </p>
+                            <p class="review-comment">{{ review.comment }}</p>
+                            <a href="{% url 'movie_detail' review.movie.id %}">
+                                View Movie &rarr;
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="dashboard-empty">
+                <span>✍️</span>
+                <h3>No reviews yet</h3>
+                <p>Watch a movie and share your opinion with other movie lovers.</p>
+                <a href="{% url 'user_movies' %}" class="dashboard-btn">
+                    Browse Movies
+                </a>
+            </div>
+        {% endif %}
+    </section>
+
+    <!-- Account Actions -->
+    <section class="dashboard-footer">
+        <div>
+            <h3>Enjoying MovieReview?</h3>
+            <p>Discover films, save your favourites, and share your reviews.</p>
+        </div>
+
+<!--        <form method="POST" action="{% url 'logout' %}">-->
+<!--            {% csrf_token %}-->
+<!--            <button type="submit" class="logout-btn">Log Out ↗</button>-->
+<!--        </form>-->
+    </section>
+
+</div>
+{% endblock %}
